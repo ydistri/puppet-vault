@@ -119,7 +119,7 @@ Data type: `Any`
 
 Directory the vault configuration will be kept in.
 
-Default value: `'/etc/vault'`
+Default value: `if $install_method == 'repo' and $manage_repo { '/etc/vault.d' } else { '/etc/vault'`
 
 ##### <a name="-vault--config_mode"></a>`config_mode`
 
@@ -376,7 +376,7 @@ Data type: `Variant[Hash, Array[Hash]]`
 
 
 
-Default value: `{ 'tcp'  => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
+Default value: `{ 'tcp' => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
 
 ##### <a name="-vault--manage_storage_dir"></a>`manage_storage_dir`
 
