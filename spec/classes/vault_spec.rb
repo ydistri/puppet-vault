@@ -3,13 +3,9 @@
 require 'spec_helper'
 
 describe 'vault' do
-  let :node do
-    'agent.example.com'
-  end
-
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { override_facts(facts, service_provider: 'systemd', processors: { count: 3 }) }
+      let(:facts) { override_facts(os_facts, processors: { count: 3 }) }
 
       context 'vault class with simple configuration' do
         let(:params) do
@@ -211,7 +207,7 @@ describe 'vault' do
             }
           end
 
-          case facts[:os]['family']
+          case os_facts[:os]['family']
           when 'Debian'
             it { is_expected.not_to contain_apt__source('HashiCorp') }
           when 'RedHat'
@@ -227,7 +223,7 @@ describe 'vault' do
             }
           end
 
-          case facts[:os]['family']
+          case os_facts[:os]['family']
           when 'Debian'
             it { is_expected.not_to contain_apt__source('HashiCorp') }
           when 'RedHat'
@@ -243,7 +239,7 @@ describe 'vault' do
             }
           end
 
-          case facts[:os]['family']
+          case os_facts[:os]['family']
           when 'Debian'
             it { is_expected.to contain_apt__source('HashiCorp') }
           when 'RedHat'
@@ -414,9 +410,9 @@ describe 'vault' do
         }
       end
 
-      case facts[:os]['family']
+      case os_facts[:os]['family']
       when 'RedHat'
-        case facts[:os]['release']['major'].to_i
+        case os_facts[:os]['release']['major'].to_i
         when 7
           context 'RedHat >=7 specific' do
             context 'includes systemd init script' do
