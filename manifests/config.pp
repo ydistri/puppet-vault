@@ -1,8 +1,10 @@
-# == Class vault::config
 #
-# This class is called from vault for service config.
+# @summary This class is called from vault for service config
+#
+# @api private
 #
 class vault::config {
+  assert_private()
   file { $vault::config_dir:
     ensure  => directory,
     purge   => $vault::purge_config_dir,

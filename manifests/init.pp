@@ -1,78 +1,54 @@
-# Class: vault
-# ===========================
 #
-# Full description of class vault here.
+# @summary install hashicorp vault
 #
-# Parameters
-# ----------
+# @param user Customise the user vault runs as, will also create the user unless `manage_user` is false.
 #
-# * `user`
-#   Customise the user vault runs as, will also create the user unless `manage_user` is false.
+# @param manage_user Whether or not the module should create the user.
 #
-# * `manage_user`
-#   Whether or not the module should create the user.
+# @param group Customise the group vault runs as, will also create the user unless `manage_group` is false.
 #
-# * `group`
-#   Customise the group vault runs as, will also create the user unless `manage_group` is false.
+# @param manage_group Whether or not the module should create the group.
 #
-# * `manage_group`
-#   Whether or not the module should create the group.
+# @param bin_dir Directory the vault executable will be installed in.
 #
-# * `bin_dir`
-#   Directory the vault executable will be installed in.
+# @param config_dir Directory the vault configuration will be kept in.
 #
-# * `config_dir`
-#   Directory the vault configuration will be kept in.
+# @param config_mode Mode of the configuration file (config.json). Defaults to '0750'
 #
-# * `config_mode`
-#   Mode of the configuration file (config.json). Defaults to '0750'
+# @param purge_config_dir Whether the `config_dir` should be purged before installing the generated config.
 #
-# * `purge_config_dir`
-#   Whether the `config_dir` should be purged before installing the
-#   generated config.
+# @param download_url Manual URL to download the vault zip distribution from.
 #
-# * `download_url`
-#   Manual URL to download the vault zip distribution from.
+# @param download_url_base Hashicorp base URL to download vault zip distribution from.
 #
-# * `download_url_base`
-#   Hashicorp base URL to download vault zip distribution from.
+# @param download_extension The extension of the vault download
 #
-# * `download_extension`
-#   The extension of the vault download
+# @param service_name Customise the name of the system service
 #
-# * `service_name`
-#   Customise the name of the system service
-#
-# * `service_provider`
-#   Customise the name of the system service provider; this
+# @param service_provider Customise the name of the system service provider; this
 #   also controls the init configuration files that are installed.
 #
-# * `service_options`
-#   Extra argument to pass to `vault server`, as per:
-#   `vault server --help`
+# @param service_options Extra argument to pass to `vault server`, as per: `vault server --help`
 #
-# * `manage_repo`
-#   Configure the upstream HashiCorp repository. Only relevant when $nomad::install_method = 'repo'.
+# @param manage_repo Configure the upstream HashiCorp repository. Only relevant when $nomad::install_method = 'repo'.
 #
-# * `manage_service`
-#   Instruct puppet to manage service or not
+# @param manage_service Instruct puppet to manage service or not
 #
-# * `num_procs`
+# @param num_procs
 #   Sets the GOMAXPROCS environment variable, to determine how many CPUs Vault
 #   can use. The official Vault Terraform install.sh script sets this to the
 #   output of ``nprocs``, with the comment, "Make sure to use all our CPUs,
 #   because Vault can block a scheduler thread". Default: number of CPUs
 #   on the system, retrieved from the ``processorcount`` Fact.
 #
-# * `api_addr`
+# @param api_addr
 #   Specifies the address (full URL) to advertise to other Vault servers in the
 #   cluster for client redirection. This value is also used for plugin backends.
 #   This can also be provided via the environment variable VAULT_API_ADDR. In
 #   general this should be set as a full URL that points to the value of the
 #   listener address
 #
-# * `version`
-#   The version of Vault to install
+# @param version The version of Vault to install
 #
 class vault (
   $user                                = $vault::params::user,

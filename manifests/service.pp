@@ -1,4 +1,6 @@
-# == Class vault::service
+#
+# @api private
+#
 class vault::service {
   if $vault::manage_service {
     service { $vault::service_name:

@@ -1,7 +1,7 @@
-# == Class vault::params
 #
-# This class is meant to be called from vault.
-# It sets variables according to platform.
+# @summary This class is meant to be called from vault. It sets variables according to platform.
+#
+# @api private
 #
 class vault::params {
   $user               = 'vault'
