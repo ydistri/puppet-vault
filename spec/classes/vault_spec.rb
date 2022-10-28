@@ -9,9 +9,7 @@ describe 'vault' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let :facts do
-        facts.merge(service_provider: 'init', processorcount: 3)
-      end
+      let(:facts) { override_facts(facts, service_provider: 'init', processors: { count: 3 }) }
 
       context 'vault class with simple configuration' do
         let(:params) do
@@ -540,9 +538,7 @@ describe 'vault' do
           end
         when 6
           context 'RedHat 6 specific' do
-            let :facts do
-              facts.merge(service_provider: 'sysv', processorcount: 3)
-            end
+            let(:facts) { override_facts(super(), service_provider: 'sysv') }
 
             context 'includes SysV init script' do
               it {
@@ -659,9 +655,7 @@ describe 'vault' do
           end
         when 7
           context 'RedHat >=7 specific' do
-            let :facts do
-              facts.merge(service_provider: 'systemd', processorcount: 3)
-            end
+            let(:facts) { override_facts(super(), service_provider: 'systemd') }
 
             context 'includes systemd init script' do
               it {
@@ -804,9 +798,7 @@ describe 'vault' do
       when 'Debian'
         context 'on Debian OS family' do
           context 'with upstart' do
-            let :facts do
-              facts.merge(service_provider: 'upstart', processorcount: 3)
-            end
+            let(:facts) { override_facts(super(), service_provider: 'upstart') }
 
             context 'includes init link to upstart-job' do
               it {
@@ -936,9 +928,7 @@ describe 'vault' do
           end
 
           context 'on Debian based with systemd' do
-            let :facts do
-              facts.merge(service_provider: 'systemd', processorcount: 3)
-            end
+            let(:facts) { override_facts(super(), service_provider: 'systemd') }
 
             context 'includes systemd init script' do
               it {
