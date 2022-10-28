@@ -8,3 +8,6 @@ spec/spec_helper.rb:
     - "require 'rspec/json_expectations'"
 spec/spec_helper_acceptance.rb:
   unmanaged: false
+.puppet-lint.rc:
+  enabled_lint_checks:
+    - parameter_documentation
