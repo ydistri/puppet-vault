@@ -69,7 +69,7 @@ class vault::config {
       default:   { $real_manage_service_file = false }
     }
   } else {
-    validate_bool($vault::manage_service_file)
+    assert_type(Boolean,$vault::manage_service_file)
     $real_manage_service_file = $vault::manage_service_file
   }
 

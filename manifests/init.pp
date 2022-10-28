@@ -93,7 +93,7 @@ class vault (
   $service_provider                    = $vault::params::service_provider,
   Boolean $manage_repo                 = $vault::params::manage_repo,
   $manage_service                      = $vault::params::manage_service,
-  $manage_service_file                 = $vault::params::manage_service_file,
+  Optional[Boolean] $manage_service_file = $vault::params::manage_service_file,
   Hash $storage                        = $vault::params::storage,
   $manage_storage_dir                  = $vault::params::manage_storage_dir,
   Variant[Hash, Array[Hash]] $listener = $vault::params::listener,
