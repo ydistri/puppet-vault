@@ -71,6 +71,7 @@ The following parameters are available in the `vault` class:
 * [`service_enable`](#-vault--service_enable)
 * [`manage_config_file`](#-vault--manage_config_file)
 * [`download_filename`](#-vault--download_filename)
+* [`manage_config_dir`](#-vault--manage_config_dir)
 
 ##### <a name="-vault--user"></a>`user`
 
@@ -432,4 +433,12 @@ Data type: `Any`
 
 
 Default value: `'vault.zip'`
+
+##### <a name="-vault--manage_config_dir"></a>`manage_config_dir`
+
+Data type: `Boolean`
+
+enable/disable the directory management. not required for package based installations
+
+Default value: `$install_method == 'archive'`
 

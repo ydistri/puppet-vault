@@ -55,15 +55,6 @@ describe 'vault' do
         end
 
         it {
-          is_expected.to contain_file('/etc/vault').
-            with_ensure('directory').
-            with_purge('true').
-            with_recurse('true').
-            with_owner('vault').
-            with_group('vault')
-        }
-
-        it {
           is_expected.to contain_file('/etc/vault/config.json').
             with_owner('vault').
             with_group('vault')
@@ -146,6 +137,15 @@ describe 'vault' do
           it {
             is_expected.to contain_archive('/tmp/vault.zip').
               that_comes_before('File[vault_binary]')
+          }
+
+          it {
+            is_expected.to contain_file('/etc/vault').
+              with_ensure('directory').
+              with_purge('true').
+              with_recurse('true').
+              with_owner('vault').
+              with_group('vault')
           }
 
           context 'when installed with default download options' do
@@ -237,6 +237,12 @@ describe 'vault' do
               install_method: 'repo',
               manage_repo: true
             }
+          end
+
+          if os_facts[:os]['family'] == 'Archlinux'
+            it { is_expected.not_to compile }
+          else
+            it { is_expected.not_to contain_file('/etc/vault') }
           end
 
           case os_facts[:os]['family']

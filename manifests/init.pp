@@ -75,6 +75,7 @@
 # @param service_enable
 # @param manage_config_file
 # @param download_filename
+# @param manage_config_dir enable/disable the directory management. not required for package based installations
 class vault (
   $user                                = 'vault',
   $manage_user                         = true,
@@ -120,6 +121,7 @@ class vault (
   Optional[Boolean] $enable_ui         = undef,
   Optional[String] $api_addr           = undef,
   Hash $extra_config                   = {},
+  Boolean $manage_config_dir           = $install_method == 'archive',
 ) inherits vault::params {
   # lint:ignore:140chars
   $real_download_url = pick($download_url, "${download_url_base}${version}/${package_name}_${version}_${os}_${arch}.${download_extension}")
