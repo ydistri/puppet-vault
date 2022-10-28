@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 describe 'vault class' do
@@ -24,6 +26,7 @@ describe 'vault class' do
       apply_manifest(pp, catch_changes: true)
     end
 
+    # rubocop:disable RSpec/RepeatedExampleGroupBody
     describe user('vault') do
       it { is_expected.to exist }
     end
@@ -31,6 +34,7 @@ describe 'vault class' do
     describe group('vault') do
       it { is_expected.to exist }
     end
+    # rubocop:enable RSpec/RepeatedExampleGroupBody
 
     describe command('getcap /usr/local/bin/vault') do
       its(:exit_status) { is_expected.to eq 0 }
@@ -57,6 +61,7 @@ describe 'vault class' do
         its(:content) { is_expected.to include 'exec start-stop-daemon -u $USER -g $GROUP -p $PID_FILE -x $VAULT -S -- server -config=$CONFIG ' }
         its(:content) { is_expected.to match %r{export GOMAXPROCS=\${GOMAXPROCS:-\d+}} }
       end
+
       describe file('/etc/init.d/vault') do
         it { is_expected.to be_symlink }
         it { is_expected.to be_linked_to '/lib/init/upstart-job' }
@@ -72,6 +77,7 @@ describe 'vault class' do
         its(:content) { is_expected.to include 'ExecStart=/usr/local/bin/vault server -config=/etc/vault/config.json ' }
         its(:content) { is_expected.to match %r{Environment=GOMAXPROCS=\d+} }
       end
+
       describe command('systemctl list-units') do
         its(:stdout) { is_expected.to include 'vault.service' }
       end
