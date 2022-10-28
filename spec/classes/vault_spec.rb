@@ -243,6 +243,7 @@ describe 'vault' do
             it { is_expected.not_to compile }
           else
             it { is_expected.not_to contain_file('/etc/vault') }
+            it { is_expected.to contain_file('/etc/vault.d/config.json') }
           end
 
           case os_facts[:os]['family']
