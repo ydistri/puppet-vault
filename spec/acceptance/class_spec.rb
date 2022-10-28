@@ -89,4 +89,43 @@ describe 'vault class' do
       it { is_expected.to be_listening.on('127.0.0.1').with('tcp') }
     end
   end
+
+  context 'with package based setup' do
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+        if $facts['os']['name'] == 'Archlinux' {
+          class { 'file_capability':
+            package_name => 'libcap',
+          }
+        } else {
+          include file_capability
+        }
+        class { 'vault':
+          storage => {
+            file => {
+              path => '/tmp',
+            }
+          },
+          listener => [{
+            tcp => {
+              address => '127.0.0.1:8200',
+              tls_disable => 1,
+            }
+          }],
+          install_method => 'repo',
+          require => Class['file_capability'],
+        }
+        PUPPET
+      end
+    end
+    describe service('vault') do
+      it { is_expected.to be_enabled }
+      it { is_expected.to be_running }
+    end
+
+    describe port(8200) do
+      it { is_expected.to be_listening.on('127.0.0.1').with('tcp') }
+    end
+  end
 end
