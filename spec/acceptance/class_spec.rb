@@ -4,29 +4,34 @@ require 'spec_helper_acceptance'
 
 describe 'vault class' do
   context 'default parameters' do
-    # Using puppet_apply as a helper
-    it 'works idempotently with no errors' do
-      pp = <<-MANIFEST
-      package { 'unzip': ensure => present }
-      -> class { 'vault':
-        storage => {
-          file => {
-            path => '/tmp',
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+        if $facts['os']['name'] == 'Archlinux' {
+          class { 'file_capability':
+            package_name => 'libcap',
           }
-        },
-        listener => [{
-          tcp => {
-            address => '127.0.0.1:8200',
-            tls_disable => 1,
-          }
-        }]
-      }
-      MANIFEST
-      # Run it twice and test for idempotency
-      apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_changes: true)
+        } else {
+          include file_capability
+        }
+        package { 'unzip': ensure => present }
+        -> class { 'vault':
+          storage => {
+            file => {
+              path => '/tmp',
+            }
+          },
+          listener => [{
+            tcp => {
+              address => '127.0.0.1:8200',
+              tls_disable => 1,
+            }
+          }],
+          require => Class['file_capability'],
+        }
+        PUPPET
+      end
     end
-
     # rubocop:disable RSpec/RepeatedExampleGroupBody
     describe user('vault') do
       it { is_expected.to exist }
