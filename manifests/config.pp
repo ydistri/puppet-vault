@@ -75,22 +75,6 @@ class vault::config {
 
   if $real_manage_service_file {
     case $vault::service_provider {
-      'upstart': {
-        file { '/etc/init/vault.conf':
-          ensure  => file,
-          mode    => '0444',
-          owner   => 'root',
-          group   => 'root',
-          content => template('vault/vault.upstart.erb'),
-        }
-        file { '/etc/init.d/vault':
-          ensure => link,
-          target => '/lib/init/upstart-job',
-          owner  => 'root',
-          group  => 'root',
-          mode   => '0755',
-        }
-      }
       'systemd': {
         ::systemd::unit_file { 'vault.service':
           content => template('vault/vault.systemd.erb'),

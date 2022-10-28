@@ -48,25 +48,7 @@ describe 'vault class' do
       it { is_expected.to be_grouped_into 'root' }
     end
 
-    if fact('service_provider') == 'upstart'
-      describe file('/etc/init/vault.conf') do
-        it { is_expected.to be_file }
-        it { is_expected.to be_mode 444 }
-        it { is_expected.to be_owned_by 'root' }
-        it { is_expected.to be_grouped_into 'root' }
-        its(:content) { is_expected.to include 'env VAULT=/usr/local/bin/vault' }
-        its(:content) { is_expected.to include 'env CONFIG=/etc/vault/config.json' }
-        its(:content) { is_expected.to include 'env USER=vault' }
-        its(:content) { is_expected.to include 'env GROUP=vault' }
-        its(:content) { is_expected.to include 'exec start-stop-daemon -u $USER -g $GROUP -p $PID_FILE -x $VAULT -S -- server -config=$CONFIG ' }
-        its(:content) { is_expected.to match %r{export GOMAXPROCS=\${GOMAXPROCS:-\d+}} }
-      end
-
-      describe file('/etc/init.d/vault') do
-        it { is_expected.to be_symlink }
-        it { is_expected.to be_linked_to '/lib/init/upstart-job' }
-      end
-    elsif fact('service_provider') == 'systemd'
+    if fact('service_provider') == 'systemd'
       describe file('/etc/systemd/system/vault.service') do
         it { is_expected.to be_file }
         it { is_expected.to be_mode 644 }

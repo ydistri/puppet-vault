@@ -797,36 +797,6 @@ describe 'vault' do
         end
       when 'Debian'
         context 'on Debian OS family' do
-          context 'with upstart' do
-            let(:facts) { override_facts(super(), service_provider: 'upstart') }
-
-            context 'includes init link to upstart-job' do
-              it {
-                is_expected.to contain_file('/etc/init.d/vault').
-                  with_ensure('link').
-                  with_target('/lib/init/upstart-job').
-                  with_mode('0755')
-              }
-            end
-
-            context 'contains /etc/init/vault.conf' do
-              it {
-                is_expected.to contain_file('/etc/init/vault.conf').
-                  with_mode('0444').
-                  with_ensure('file').
-                  with_owner('root').
-                  with_group('root').
-                  with_content(%r{^# vault Agent \(Upstart unit\)}).
-                  with_content(%r{env USER=vault}).
-                  with_content(%r{env GROUP=vault}).
-                  with_content(%r{env CONFIG=/etc/vault/config.json}).
-                  with_content(%r{env VAULT=/usr/local/bin/vault}).
-                  with_content(%r{exec start-stop-daemon -u \$USER -g \$GROUP -p \$PID_FILE -x \$VAULT -S -- server -config=\$CONFIG $}).
-                  with_content(%r{export GOMAXPROCS=\${GOMAXPROCS:-3}})
-              }
-            end
-          end
-
           context 'service with modified options and sysv init' do
             let :facts do
               facts.merge(service_provider: 'init')
