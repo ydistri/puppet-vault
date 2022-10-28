@@ -78,7 +78,7 @@ Data type: `Any`
 
 Customise the user vault runs as, will also create the user unless `manage_user` is false.
 
-Default value: `$vault::params::user`
+Default value: `'vault'`
 
 ##### <a name="-vault--manage_user"></a>`manage_user`
 
@@ -86,7 +86,7 @@ Data type: `Any`
 
 Whether or not the module should create the user.
 
-Default value: `$vault::params::manage_user`
+Default value: `true`
 
 ##### <a name="-vault--group"></a>`group`
 
@@ -94,7 +94,7 @@ Data type: `Any`
 
 Customise the group vault runs as, will also create the user unless `manage_group` is false.
 
-Default value: `$vault::params::group`
+Default value: `'vault'`
 
 ##### <a name="-vault--manage_group"></a>`manage_group`
 
@@ -102,7 +102,7 @@ Data type: `Any`
 
 Whether or not the module should create the group.
 
-Default value: `$vault::params::manage_group`
+Default value: `true`
 
 ##### <a name="-vault--bin_dir"></a>`bin_dir`
 
@@ -118,7 +118,7 @@ Data type: `Any`
 
 Directory the vault configuration will be kept in.
 
-Default value: `$vault::params::config_dir`
+Default value: `'/etc/vault'`
 
 ##### <a name="-vault--config_mode"></a>`config_mode`
 
@@ -126,7 +126,7 @@ Data type: `Any`
 
 Mode of the configuration file (config.json). Defaults to '0750'
 
-Default value: `$vault::params::config_mode`
+Default value: `'0750'`
 
 ##### <a name="-vault--purge_config_dir"></a>`purge_config_dir`
 
@@ -142,7 +142,7 @@ Data type: `Any`
 
 Manual URL to download the vault zip distribution from.
 
-Default value: `$vault::params::download_url`
+Default value: `undef`
 
 ##### <a name="-vault--download_url_base"></a>`download_url_base`
 
@@ -150,7 +150,7 @@ Data type: `Any`
 
 Hashicorp base URL to download vault zip distribution from.
 
-Default value: `$vault::params::download_url_base`
+Default value: `'https://releases.hashicorp.com/vault/'`
 
 ##### <a name="-vault--download_extension"></a>`download_extension`
 
@@ -158,7 +158,7 @@ Data type: `Any`
 
 The extension of the vault download
 
-Default value: `$vault::params::download_extension`
+Default value: `'zip'`
 
 ##### <a name="-vault--service_name"></a>`service_name`
 
@@ -166,7 +166,7 @@ Data type: `Any`
 
 Customise the name of the system service
 
-Default value: `$vault::params::service_name`
+Default value: `'vault'`
 
 ##### <a name="-vault--service_provider"></a>`service_provider`
 
@@ -175,7 +175,7 @@ Data type: `Any`
 Customise the name of the system service provider; this
 also controls the init configuration files that are installed.
 
-Default value: `$vault::params::service_provider`
+Default value: `$facts['service_provider']`
 
 ##### <a name="-vault--service_options"></a>`service_options`
 
@@ -199,7 +199,7 @@ Data type: `Any`
 
 Instruct puppet to manage service or not
 
-Default value: `$vault::params::manage_service`
+Default value: `true`
 
 ##### <a name="-vault--num_procs"></a>`num_procs`
 
@@ -211,7 +211,7 @@ output of ``nprocs``, with the comment, "Make sure to use all our CPUs,
 because Vault can block a scheduler thread". Default: number of CPUs
 on the system, retrieved from the ``processorcount`` Fact.
 
-Default value: `$vault::params::num_procs`
+Default value: `$facts['processors']['count']`
 
 ##### <a name="-vault--api_addr"></a>`api_addr`
 
@@ -231,7 +231,7 @@ Data type: `Any`
 
 The version of Vault to install
 
-Default value: `$vault::params::version`
+Default value: `'1.4.2'`
 
 ##### <a name="-vault--manage_config_file"></a>`manage_config_file`
 
@@ -239,7 +239,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::manage_config_file`
+Default value: `true`
 
 ##### <a name="-vault--service_enable"></a>`service_enable`
 
@@ -247,7 +247,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::service_enable`
+Default value: `true`
 
 ##### <a name="-vault--service_ensure"></a>`service_ensure`
 
@@ -255,7 +255,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::service_ensure`
+Default value: `'running'`
 
 ##### <a name="-vault--manage_service_file"></a>`manage_service_file`
 
@@ -271,7 +271,7 @@ Data type: `Hash`
 
 
 
-Default value: `$vault::params::storage`
+Default value: `{ 'file' => { 'path' => '/var/lib/vault' } }`
 
 ##### <a name="-vault--manage_storage_dir"></a>`manage_storage_dir`
 
@@ -279,7 +279,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::manage_storage_dir`
+Default value: `false`
 
 ##### <a name="-vault--listener"></a>`listener`
 
@@ -287,7 +287,7 @@ Data type: `Variant[Hash, Array[Hash]]`
 
 
 
-Default value: `$vault::params::listener`
+Default value: `{ 'tcp'  => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
 
 ##### <a name="-vault--ha_storage"></a>`ha_storage`
 
@@ -295,7 +295,7 @@ Data type: `Optional[Hash]`
 
 
 
-Default value: `$vault::params::ha_storage`
+Default value: `undef`
 
 ##### <a name="-vault--seal"></a>`seal`
 
@@ -303,7 +303,7 @@ Data type: `Optional[Hash]`
 
 
 
-Default value: `$vault::params::seal`
+Default value: `undef`
 
 ##### <a name="-vault--disable_cache"></a>`disable_cache`
 
@@ -311,7 +311,7 @@ Data type: `Optional[Boolean]`
 
 
 
-Default value: `$vault::params::disable_cache`
+Default value: `undef`
 
 ##### <a name="-vault--telemetry"></a>`telemetry`
 
@@ -319,7 +319,7 @@ Data type: `Optional[Hash]`
 
 
 
-Default value: `$vault::params::telemetry`
+Default value: `undef`
 
 ##### <a name="-vault--default_lease_ttl"></a>`default_lease_ttl`
 
@@ -327,7 +327,7 @@ Data type: `Optional[String]`
 
 
 
-Default value: `$vault::params::default_lease_ttl`
+Default value: `undef`
 
 ##### <a name="-vault--max_lease_ttl"></a>`max_lease_ttl`
 
@@ -335,7 +335,7 @@ Data type: `Optional[String]`
 
 
 
-Default value: `$vault::params::max_lease_ttl`
+Default value: `undef`
 
 ##### <a name="-vault--disable_mlock"></a>`disable_mlock`
 
@@ -343,7 +343,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::disable_mlock`
+Default value: `undef`
 
 ##### <a name="-vault--manage_file_capabilities"></a>`manage_file_capabilities`
 
@@ -351,7 +351,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::manage_file_capabilities`
+Default value: `undef`
 
 ##### <a name="-vault--install_method"></a>`install_method`
 
@@ -367,7 +367,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::package_name`
+Default value: `'vault'`
 
 ##### <a name="-vault--package_ensure"></a>`package_ensure`
 
@@ -375,7 +375,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::package_ensure`
+Default value: `'installed'`
 
 ##### <a name="-vault--download_dir"></a>`download_dir`
 
@@ -383,7 +383,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::download_dir`
+Default value: `'/tmp'`
 
 ##### <a name="-vault--manage_download_dir"></a>`manage_download_dir`
 
@@ -391,7 +391,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::manage_download_dir`
+Default value: `false`
 
 ##### <a name="-vault--download_filename"></a>`download_filename`
 
@@ -399,7 +399,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::download_filename`
+Default value: `'vault.zip'`
 
 ##### <a name="-vault--os"></a>`os`
 
@@ -407,7 +407,7 @@ Data type: `Any`
 
 
 
-Default value: `$vault::params::os`
+Default value: `downcase($facts['kernel'])`
 
 ##### <a name="-vault--arch"></a>`arch`
 
@@ -423,7 +423,7 @@ Data type: `Optional[Boolean]`
 
 
 
-Default value: `$vault::params::enable_ui`
+Default value: `undef`
 
 ##### <a name="-vault--extra_config"></a>`extra_config`
 
