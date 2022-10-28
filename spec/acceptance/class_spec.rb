@@ -7,7 +7,8 @@ describe 'vault class' do
     # Using puppet_apply as a helper
     it 'works idempotently with no errors' do
       pp = <<-MANIFEST
-      class { '::vault':
+      package { 'unzip': ensure => present }
+      -> class { 'vault':
         storage => {
           file => {
             path => '/tmp',
