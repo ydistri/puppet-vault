@@ -27,6 +27,8 @@ describe 'vault class' do
               tls_disable => 1,
             }
           }],
+          bin_dir => '/usr/local/bin',
+          install_method => 'archive',
           require => Class['file_capability'],
         }
         PUPPET
@@ -44,7 +46,7 @@ describe 'vault class' do
 
     describe command('getcap /usr/local/bin/vault') do
       its(:exit_status) { is_expected.to eq 0 }
-      its(:stdout) { is_expected.to include '/usr/local/bin/vault = cap_ipc_lock+ep' }
+      its(:stdout) { is_expected.to match %r{/usr/local/bin/vault.*cap_ipc_lock.*ep} }
     end
 
     describe file('/usr/local/bin/vault') do
