@@ -1,19 +1,21 @@
-[![Puppet Forge](https://img.shields.io/puppetforge/v/jsok/vault.svg)](https://forge.puppetlabs.com/jsok/vault)
-[![Puppet Forge Downloads](https://img.shields.io/puppetforge/dt/jsok/vault.svg)](https://forge.puppetlabs.com/jsok/vault)
-[![Build Status](https://travis-ci.org/jsok/puppet-vault.svg?branch=master)](https://travis-ci.org/jsok/puppet-vault)
-
 # puppet-vault
+
+[![Build Status](https://github.com/voxpupuli/puppet-vault/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-vault/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-vault/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-vault/actions/workflows/release.yml)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/vault.svg)](https://forge.puppetlabs.com/puppet/vault)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/vault.svg)](https://forge.puppetlabs.com/puppet/vault)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/vault.svg)](https://forge.puppetlabs.com/puppet/vault)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/vault.svg)](https://forge.puppetlabs.com/puppet/vault)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-catalog-diff)
+[![Apache-2 License](https://img.shields.io/github/license/voxpupuli/puppet-vault.svg)](LICENSE)
+[![Donated by jsok](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
+
 
 Puppet module to install and run [Hashicorp Vault](https://vaultproject.io).
 
 ## Support
 
-This module is currently only tested on:
-
-* Ubuntu 16.04
-* Ubuntu 18.04
-* CentOS/RedHat 6
-* CentOS/RedHat 7
+For an up2date list of supported/tested operatingsystems, please checkout the metadata.json.
 
 ## Usage
 
@@ -29,39 +31,22 @@ Please see [The official documentation](https://www.vaultproject.io/docs/configu
 ### Setup parameters
 
 * `user`: Customise the user vault runs as, will also create the user unless `manage_user` is false.
-
 * `manage_user`: Whether or not the module should create the user.
-
 * `group`: Customise the group vault runs as, will also create the user unless `manage_group` is false.
-
 * `manage_group`: Whether or not the module should create the group.
-
 * `bin_dir`: Directory the vault executable will be installed in.
-
 * `config_dir`: Directory the vault configuration will be kept in.
-
 * `config_mode`: Mode of the configuration file (config.json). Defaults to '0750'
-
 * `purge_config_dir`: Whether the `config_dir` should be purged before installing the generated config.
-
 * `install_method`: Supports the values `repo` or `archive`. See [Installation parameters](#installation-parameters).
-
 * `service_name`: Customise the name of the system service
-
 * `service_enable`: Tell the OS to enable or disable the service at system startup
-
 * `service_ensure`: Tell the OS whether the service should be running or stopped
-
 * `service_provider`: Customise the name of the system service provider; this also controls the init configuration files that are installed.
-
 * `service_options`: Extra argument to pass to `vault server`, as per: `vault server --help`
-
 * `num_procs`: Sets the `GOMAXPROCS` environment variable, to determine how many CPUs Vault can use. The official Vault Terraform install.sh script sets this to the output of ``nprocs``, with the comment, "Make sure to use all our CPUs, because Vault can block a scheduler thread". Default: number of CPUs on the system, retrieved from the ``processorcount`` fact.
-
 * `manage_storage_dir`: When using the file storage, this boolean determines whether or not the path (as specified in the `['file']['path']` section of the storage config) is created, and the owner and group set to the vault user.  Default: `false`
-
 * `manage_service_file`: Manages the service file regardless of the defaults. Default: See [Installation parameters](#installation-parameters).
-
 * `manage_config_file`: Manages the configuration file. When set to false, `config.json` will not be generated. `manag_storage_dir` is ignored. Default: `true`
 
 ### Installation parameters
@@ -213,6 +198,11 @@ To run Beaker acceptance tests: ``BEAKER_set=<nodeset name> BEAKER_PUPPET_COLLEC
 where ``<nodeset name>`` is one of the filenames in ``spec/acceptance/nodesets`` without the trailing ``.yml``,
 e.g. `ubuntu-18.04-x86_64-docker`.
 
+## transfer notice
+
+This module was forked from https://github.com/jsok/puppet-vault
+
 ## Related Projects
 
- * [`hiera-vault`](https://github.com/jsok/hiera-vault): A Hiera storage backend to retrieve secrets from Hashicorp's Vault
+ * [hiera-vault](https://github.com/petems/petems-hiera_vault): A Hiera storage backend to retrieve secrets from Hashicorp's Vault
+ * [vault_lookup](https://github.com/voxpupuli/puppet-vault_lookup): A puppet (deferred) function to do lookups in Vault
