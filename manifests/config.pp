@@ -5,12 +5,14 @@
 #
 class vault::config {
   assert_private()
-  file { $vault::config_dir:
-    ensure  => directory,
-    purge   => $vault::purge_config_dir,
-    recurse => $vault::purge_config_dir,
-    owner   => $vault::user,
-    group   => $vault::group,
+  if $vault::manage_config_dir {
+    file { $vault::config_dir:
+      ensure  => directory,
+      purge   => $vault::purge_config_dir,
+      recurse => $vault::purge_config_dir,
+      owner   => $vault::user,
+      group   => $vault::group,
+    }
   }
 
   if $vault::manage_config_file {
