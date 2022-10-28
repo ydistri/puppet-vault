@@ -593,7 +593,6 @@ describe 'vault' do
           end
 
           context 'on Debian based with systemd' do
-
             context 'includes systemd init script' do
               it {
                 is_expected.to contain_file('/etc/systemd/system/vault.service').
