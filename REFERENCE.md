@@ -46,31 +46,31 @@ The following parameters are available in the `vault` class:
 * [`num_procs`](#-vault--num_procs)
 * [`api_addr`](#-vault--api_addr)
 * [`version`](#-vault--version)
-* [`manage_config_file`](#-vault--manage_config_file)
-* [`service_enable`](#-vault--service_enable)
-* [`service_ensure`](#-vault--service_ensure)
-* [`manage_service_file`](#-vault--manage_service_file)
-* [`storage`](#-vault--storage)
-* [`manage_storage_dir`](#-vault--manage_storage_dir)
-* [`listener`](#-vault--listener)
-* [`ha_storage`](#-vault--ha_storage)
-* [`seal`](#-vault--seal)
-* [`disable_cache`](#-vault--disable_cache)
-* [`telemetry`](#-vault--telemetry)
-* [`default_lease_ttl`](#-vault--default_lease_ttl)
-* [`max_lease_ttl`](#-vault--max_lease_ttl)
-* [`disable_mlock`](#-vault--disable_mlock)
-* [`manage_file_capabilities`](#-vault--manage_file_capabilities)
-* [`install_method`](#-vault--install_method)
-* [`package_name`](#-vault--package_name)
-* [`package_ensure`](#-vault--package_ensure)
-* [`download_dir`](#-vault--download_dir)
-* [`manage_download_dir`](#-vault--manage_download_dir)
-* [`download_filename`](#-vault--download_filename)
-* [`os`](#-vault--os)
-* [`arch`](#-vault--arch)
-* [`enable_ui`](#-vault--enable_ui)
 * [`extra_config`](#-vault--extra_config)
+* [`enable_ui`](#-vault--enable_ui)
+* [`arch`](#-vault--arch)
+* [`os`](#-vault--os)
+* [`manage_download_dir`](#-vault--manage_download_dir)
+* [`download_dir`](#-vault--download_dir)
+* [`package_ensure`](#-vault--package_ensure)
+* [`package_name`](#-vault--package_name)
+* [`install_method`](#-vault--install_method)
+* [`manage_file_capabilities`](#-vault--manage_file_capabilities)
+* [`disable_mlock`](#-vault--disable_mlock)
+* [`max_lease_ttl`](#-vault--max_lease_ttl)
+* [`default_lease_ttl`](#-vault--default_lease_ttl)
+* [`telemetry`](#-vault--telemetry)
+* [`disable_cache`](#-vault--disable_cache)
+* [`seal`](#-vault--seal)
+* [`ha_storage`](#-vault--ha_storage)
+* [`listener`](#-vault--listener)
+* [`manage_storage_dir`](#-vault--manage_storage_dir)
+* [`storage`](#-vault--storage)
+* [`manage_service_file`](#-vault--manage_service_file)
+* [`service_ensure`](#-vault--service_ensure)
+* [`service_enable`](#-vault--service_enable)
+* [`manage_config_file`](#-vault--manage_config_file)
+* [`download_filename`](#-vault--download_filename)
 
 ##### <a name="-vault--user"></a>`user`
 
@@ -233,47 +233,39 @@ The version of Vault to install
 
 Default value: `'1.4.2'`
 
-##### <a name="-vault--manage_config_file"></a>`manage_config_file`
-
-Data type: `Any`
-
-
-
-Default value: `true`
-
-##### <a name="-vault--service_enable"></a>`service_enable`
-
-Data type: `Any`
-
-
-
-Default value: `true`
-
-##### <a name="-vault--service_ensure"></a>`service_ensure`
-
-Data type: `Any`
-
-
-
-Default value: `'running'`
-
-##### <a name="-vault--manage_service_file"></a>`manage_service_file`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `$vault::params::manage_service_file`
-
-##### <a name="-vault--storage"></a>`storage`
+##### <a name="-vault--extra_config"></a>`extra_config`
 
 Data type: `Hash`
 
 
 
-Default value: `{ 'file' => { 'path' => '/var/lib/vault' } }`
+Default value: `{}`
 
-##### <a name="-vault--manage_storage_dir"></a>`manage_storage_dir`
+##### <a name="-vault--enable_ui"></a>`enable_ui`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vault--arch"></a>`arch`
+
+Data type: `Any`
+
+
+
+Default value: `$vault::params::arch`
+
+##### <a name="-vault--os"></a>`os`
+
+Data type: `Any`
+
+
+
+Default value: `downcase($facts['kernel'])`
+
+##### <a name="-vault--manage_download_dir"></a>`manage_download_dir`
 
 Data type: `Any`
 
@@ -281,23 +273,71 @@ Data type: `Any`
 
 Default value: `false`
 
-##### <a name="-vault--listener"></a>`listener`
+##### <a name="-vault--download_dir"></a>`download_dir`
 
-Data type: `Variant[Hash, Array[Hash]]`
+Data type: `Any`
 
 
 
-Default value: `{ 'tcp'  => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
+Default value: `'/tmp'`
 
-##### <a name="-vault--ha_storage"></a>`ha_storage`
+##### <a name="-vault--package_ensure"></a>`package_ensure`
 
-Data type: `Optional[Hash]`
+Data type: `Any`
+
+
+
+Default value: `'installed'`
+
+##### <a name="-vault--package_name"></a>`package_name`
+
+Data type: `Any`
+
+
+
+Default value: `'vault'`
+
+##### <a name="-vault--install_method"></a>`install_method`
+
+Data type: `Any`
+
+
+
+Default value: `$vault::params::install_method`
+
+##### <a name="-vault--manage_file_capabilities"></a>`manage_file_capabilities`
+
+Data type: `Any`
 
 
 
 Default value: `undef`
 
-##### <a name="-vault--seal"></a>`seal`
+##### <a name="-vault--disable_mlock"></a>`disable_mlock`
+
+Data type: `Any`
+
+
+
+Default value: `undef`
+
+##### <a name="-vault--max_lease_ttl"></a>`max_lease_ttl`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vault--default_lease_ttl"></a>`default_lease_ttl`
+
+Data type: `Optional[String]`
+
+
+
+Default value: `undef`
+
+##### <a name="-vault--telemetry"></a>`telemetry`
 
 Data type: `Optional[Hash]`
 
@@ -313,7 +353,7 @@ Data type: `Optional[Boolean]`
 
 Default value: `undef`
 
-##### <a name="-vault--telemetry"></a>`telemetry`
+##### <a name="-vault--seal"></a>`seal`
 
 Data type: `Optional[Hash]`
 
@@ -321,77 +361,69 @@ Data type: `Optional[Hash]`
 
 Default value: `undef`
 
-##### <a name="-vault--default_lease_ttl"></a>`default_lease_ttl`
+##### <a name="-vault--ha_storage"></a>`ha_storage`
 
-Data type: `Optional[String]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vault--max_lease_ttl"></a>`max_lease_ttl`
-
-Data type: `Optional[String]`
+Data type: `Optional[Hash]`
 
 
 
 Default value: `undef`
 
-##### <a name="-vault--disable_mlock"></a>`disable_mlock`
+##### <a name="-vault--listener"></a>`listener`
 
-Data type: `Any`
-
-
-
-Default value: `undef`
-
-##### <a name="-vault--manage_file_capabilities"></a>`manage_file_capabilities`
-
-Data type: `Any`
+Data type: `Variant[Hash, Array[Hash]]`
 
 
 
-Default value: `undef`
+Default value: `{ 'tcp'  => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
 
-##### <a name="-vault--install_method"></a>`install_method`
-
-Data type: `Any`
-
-
-
-Default value: `$vault::params::install_method`
-
-##### <a name="-vault--package_name"></a>`package_name`
-
-Data type: `Any`
-
-
-
-Default value: `'vault'`
-
-##### <a name="-vault--package_ensure"></a>`package_ensure`
-
-Data type: `Any`
-
-
-
-Default value: `'installed'`
-
-##### <a name="-vault--download_dir"></a>`download_dir`
-
-Data type: `Any`
-
-
-
-Default value: `'/tmp'`
-
-##### <a name="-vault--manage_download_dir"></a>`manage_download_dir`
+##### <a name="-vault--manage_storage_dir"></a>`manage_storage_dir`
 
 Data type: `Any`
 
 
 
 Default value: `false`
+
+##### <a name="-vault--storage"></a>`storage`
+
+Data type: `Hash`
+
+
+
+Default value: `{ 'file' => { 'path' => '/var/lib/vault' } }`
+
+##### <a name="-vault--manage_service_file"></a>`manage_service_file`
+
+Data type: `Optional[Boolean]`
+
+
+
+Default value: `$vault::params::manage_service_file`
+
+##### <a name="-vault--service_ensure"></a>`service_ensure`
+
+Data type: `Any`
+
+
+
+Default value: `'running'`
+
+##### <a name="-vault--service_enable"></a>`service_enable`
+
+Data type: `Any`
+
+
+
+Default value: `true`
+
+##### <a name="-vault--manage_config_file"></a>`manage_config_file`
+
+Data type: `Any`
+
+
+
+Default value: `true`
 
 ##### <a name="-vault--download_filename"></a>`download_filename`
 
@@ -400,36 +432,4 @@ Data type: `Any`
 
 
 Default value: `'vault.zip'`
-
-##### <a name="-vault--os"></a>`os`
-
-Data type: `Any`
-
-
-
-Default value: `downcase($facts['kernel'])`
-
-##### <a name="-vault--arch"></a>`arch`
-
-Data type: `Any`
-
-
-
-Default value: `$vault::params::arch`
-
-##### <a name="-vault--enable_ui"></a>`enable_ui`
-
-Data type: `Optional[Boolean]`
-
-
-
-Default value: `undef`
-
-##### <a name="-vault--extra_config"></a>`extra_config`
-
-Data type: `Hash`
-
-
-
-Default value: `{}`
 

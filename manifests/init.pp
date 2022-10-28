@@ -50,6 +50,31 @@
 #
 # @param version The version of Vault to install
 #
+# @param extra_config
+# @param enable_ui
+# @param arch
+# @param os
+# @param manage_download_dir
+# @param download_dir
+# @param package_ensure
+# @param package_name
+# @param install_method
+# @param manage_file_capabilities
+# @param disable_mlock
+# @param max_lease_ttl
+# @param default_lease_ttl
+# @param telemetry
+# @param disable_cache
+# @param seal
+# @param ha_storage
+# @param listener
+# @param manage_storage_dir
+# @param storage
+# @param manage_service_file
+# @param service_ensure
+# @param service_enable
+# @param manage_config_file
+# @param download_filename
 class vault (
   $user                                = 'vault',
   $manage_user                         = true,
