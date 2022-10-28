@@ -76,17 +76,8 @@ class vault::config {
   if $real_manage_service_file {
     case $vault::service_provider {
       'systemd': {
-        ::systemd::unit_file { 'vault.service':
+        systemd::unit_file { 'vault.service':
           content => template('vault/vault.systemd.erb'),
-        }
-      }
-      /(redhat|sysv|init)/: {
-        file { '/etc/init.d/vault':
-          ensure  => file,
-          owner   => 'root',
-          group   => 'root',
-          mode    => '0755',
-          content => template('vault/vault.initd.erb'),
         }
       }
       default: {

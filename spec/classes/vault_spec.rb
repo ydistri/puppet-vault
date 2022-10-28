@@ -9,7 +9,7 @@ describe 'vault' do
 
   on_supported_os.each do |os, facts|
     context "on #{os}" do
-      let(:facts) { override_facts(facts, service_provider: 'init', processors: { count: 3 }) }
+      let(:facts) { override_facts(facts, service_provider: 'systemd', processors: { count: 3 }) }
 
       context 'vault class with simple configuration' do
         let(:params) do
@@ -417,246 +417,8 @@ describe 'vault' do
       case facts[:os]['family']
       when 'RedHat'
         case facts[:os]['release']['major'].to_i
-        when 2017
-          context 'RedHat 7 Amazon Linux specific' do
-            let facts do
-              facts.merge(service_provider: 'sysv', grocessorcount: 3)
-            end
-
-            context 'includes SysV init script' do
-              it {
-                is_expected.to contain_file('/etc/init.d/vault').
-                  with_mode('0755').
-                  with_ensure('file').
-                  with_owner('root').
-                  with_group('root').
-                  with_content(%r{^#!/bin/sh}).
-                  with_content(%r{export GOMAXPROCS=\${GOMAXPROCS:-3}}).
-                  with_content(%r{OPTIONS=\$OPTIONS:-""}).
-                  with_content(%r{exec="/usr/local/bin/vault"}).
-                  with_content(%r{conffile="/etc/vault/config.json"}).
-                  with_content(%r{chown vault \$logfile \$pidfile})
-              }
-            end
-
-            context 'service with non-default options' do
-              let(:params) do
-                {
-                  bin_dir: '/opt/bin',
-                  config_dir: '/opt/etc/vault',
-                  service_options: '-log-level=info',
-                  user: 'root',
-                  group: 'admin',
-                  num_procs: '5'
-                }
-              end
-
-              it {
-                is_expected.to contain_file('/etc/init.d/vault').
-                  with_mode('0755').
-                  with_ensure('file').
-                  with_owner('root').
-                  with_group('root').
-                  with_content(%r{^#!/bin/sh}).
-                  with_content(%r{export GOMAXPROCS=\${GOMAXPROCS:-5}}).
-                  with_content(%r{OPTIONS=\$OPTIONS:-"-log-level=info"}).
-                  with_content(%r{exec="/opt/bin/vault"}).
-                  with_content(%r{conffile="/opt/etc/vault/config.json"}).
-                  with_content(%r{chown root \$logfile \$pidfile})
-              }
-            end
-
-            context 'does not include systemd magic' do
-              it { is_expected.not_to contain_class('systemd') }
-            end
-
-            context 'install through repo with default service management' do
-              let(:params) do
-                {
-                  install_method: 'repo',
-                  manage_service_file: :undef
-                }
-              end
-
-              it { is_expected.not_to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through repo without service management' do
-              let(:params) do
-                {
-                  install_method: 'repo',
-                  manage_service_file: false
-                }
-              end
-
-              it { is_expected.not_to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through repo with service management' do
-              let(:params) do
-                {
-                  install_method: 'repo',
-                  manage_service_file: true
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through archive with default service management' do
-              let(:params) do
-                {
-                  install_method: 'archive',
-                  manage_service_file: :undef
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through archive without service management' do
-              let(:params) do
-                {
-                  install_method: 'archive',
-                  manage_service_file: false
-                }
-              end
-
-              it { is_expected.not_to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through archive with service management' do
-              let(:params) do
-                {
-                  install_method: 'archive',
-                  manage_service_file: true
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/vault') }
-            end
-          end
-        when 6
-          context 'RedHat 6 specific' do
-            let(:facts) { override_facts(super(), service_provider: 'sysv') }
-
-            context 'includes SysV init script' do
-              it {
-                is_expected.to contain_file('/etc/init.d/vault').
-                  with_mode('0755').
-                  with_ensure('file').
-                  with_owner('root').
-                  with_group('root').
-                  with_content(%r{^#!/bin/sh}).
-                  with_content(%r{export GOMAXPROCS=\${GOMAXPROCS:-3}}).
-                  with_content(%r{OPTIONS=\$OPTIONS:-""}).
-                  with_content(%r{exec="/usr/local/bin/vault"}).
-                  with_content(%r{conffile="/etc/vault/config.json"}).
-                  with_content(%r{chown vault \$logfile \$pidfile})
-              }
-            end
-
-            context 'service with non-default options' do
-              let(:params) do
-                {
-                  bin_dir: '/opt/bin',
-                  config_dir: '/opt/etc/vault',
-                  service_options: '-log-level=info',
-                  user: 'root',
-                  group: 'admin',
-                  num_procs: '5'
-                }
-              end
-
-              it {
-                is_expected.to contain_file('/etc/init.d/vault').
-                  with_mode('0755').
-                  with_ensure('file').
-                  with_owner('root').
-                  with_group('root').
-                  with_content(%r{^#!/bin/sh}).
-                  with_content(%r{export GOMAXPROCS=\${GOMAXPROCS:-5}}).
-                  with_content(%r{OPTIONS=\$OPTIONS:-"-log-level=info"}).
-                  with_content(%r{exec="/opt/bin/vault"}).
-                  with_content(%r{conffile="/opt/etc/vault/config.json"}).
-                  with_content(%r{chown root \$logfile \$pidfile})
-              }
-            end
-
-            context 'does not include systemd magic' do
-              it { is_expected.not_to contain_class('systemd') }
-            end
-
-            context 'install through repo with default service management' do
-              let(:params) do
-                {
-                  install_method: 'repo',
-                  manage_service_file: :undef
-                }
-              end
-
-              it { is_expected.not_to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through repo without service management' do
-              let(:params) do
-                {
-                  install_method: 'repo',
-                  manage_service_file: false
-                }
-              end
-
-              it { is_expected.not_to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through repo with service management' do
-              let(:params) do
-                {
-                  install_method: 'repo',
-                  manage_service_file: true
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through archive with default service management' do
-              let(:params) do
-                {
-                  install_method: 'archive',
-                  manage_service_file: :undef
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through archive without service management' do
-              let(:params) do
-                {
-                  install_method: 'archive',
-                  manage_service_file: false
-                }
-              end
-
-              it { is_expected.not_to contain_file('/etc/init.d/vault') }
-            end
-
-            context 'install through archive with service management' do
-              let(:params) do
-                {
-                  install_method: 'archive',
-                  manage_service_file: true
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/vault') }
-            end
-          end
         when 7
           context 'RedHat >=7 specific' do
-            let(:facts) { override_facts(super(), service_provider: 'systemd') }
-
             context 'includes systemd init script' do
               it {
                 is_expected.to contain_file('/etc/systemd/system/vault.service').
@@ -797,40 +559,6 @@ describe 'vault' do
         end
       when 'Debian'
         context 'on Debian OS family' do
-          context 'service with modified options and sysv init' do
-            let :facts do
-              facts.merge(service_provider: 'init')
-            end
-            let(:params) do
-              {
-                bin_dir: '/opt/bin',
-                config_dir: '/opt/etc/vault',
-                service_options: '-log-level=info',
-                user: 'root',
-                group: 'admin'
-              }
-            end
-
-            it { is_expected.to contain_file('vault_binary').with_path('/opt/bin/vault') }
-
-            it {
-              is_expected.to contain_file_capability('vault_binary_capability').
-                with_file('/opt/bin/vault')
-            }
-
-            it { is_expected.to contain_file('/opt/etc/vault/config.json') }
-
-            it {
-              is_expected.to contain_file('/opt/etc/vault').
-                with_ensure('directory').
-                with_purge('true'). \
-                with_recurse('true')
-            }
-
-            it { is_expected.to contain_user('root') }
-            it { is_expected.to contain_group('admin') }
-          end
-
           context 'install through repo with default service management' do
             let(:params) do
               {
@@ -853,28 +581,6 @@ describe 'vault' do
             it { is_expected.not_to contain_file('/etc/init.d/vault') }
           end
 
-          context 'install through repo with service management' do
-            let(:params) do
-              {
-                install_method: 'repo',
-                manage_service_file: true
-              }
-            end
-
-            it { is_expected.to contain_file('/etc/init.d/vault') }
-          end
-
-          context 'install through archive with default service management' do
-            let(:params) do
-              {
-                install_method: 'archive',
-                manage_service_file: :undef
-              }
-            end
-
-            it { is_expected.to contain_file('/etc/init.d/vault') }
-          end
-
           context 'install through archive without service management' do
             let(:params) do
               {
@@ -886,19 +592,7 @@ describe 'vault' do
             it { is_expected.not_to contain_file('/etc/init.d/vault') }
           end
 
-          context 'install through archive with service management' do
-            let(:params) do
-              {
-                install_method: 'archive',
-                manage_service_file: true
-              }
-            end
-
-            it { is_expected.to contain_file('/etc/init.d/vault') }
-          end
-
           context 'on Debian based with systemd' do
-            let(:facts) { override_facts(super(), service_provider: 'systemd') }
 
             context 'includes systemd init script' do
               it {
