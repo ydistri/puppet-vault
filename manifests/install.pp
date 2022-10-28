@@ -1,6 +1,8 @@
-# == Class vault::install
+#
+# @api private
 #
 class vault::install {
+  assert_private()
   $vault_bin = "${vault::bin_dir}/vault"
 
   case $vault::install_method {
