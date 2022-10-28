@@ -1,21 +1,20 @@
-##### SUMMARY
-<!--- Describe the change, including rationale and design decisions -->
+<!--
+Thank you for contributing to this project!
 
-<!---
-If you are fixing an existing issue, please include "Fixes #nnn" in your
-commit message and your description; but you should still explain what
-the change does.
+- This project has a Contributor Code of Conduct: https://voxpupuli.org/coc/
+- Please check that here is no existing issue or PR that addresses your problem.
+- Our vulnerabilities reporting process is at https://voxpupuli.org/security/
+
+-->
+#### Pull Request (PR) description
+<!--
+Replace this comment with a description of your pull request.
 -->
 
-##### TESTS/SPECS
-
-<!---
-Pull Requests require passing Travis CI tests.
-If you have added new functionality, you **must** include spec tests,
-see https://github.com/jsok/puppet-vault/tree/master/spec/classes
-
-If you are adding support for a new OS, then you should also create
-acceptance tests, see https://github.com/jsok/puppet-vault/tree/master/spec/acceptance
+#### This Pull Request (PR) fixes the following issues
+<!--
+Replace this comment with the list of issues or n/a.
+Use format:
+Fixes #123
+Fixes #124
 -->
-
-<!--- Describe how you have tested this change -->

@@ -1,0 +1,10 @@
+---
+Gemfile:
+  optional:
+    ':test':
+      - gem: 'rspec-json_expectations'
+spec/spec_helper.rb:
+  spec_overrides:
+    - "require 'rspec/json_expectations'"
+spec/spec_helper_acceptance.rb:
+  unmanaged: false
