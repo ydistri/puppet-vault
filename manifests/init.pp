@@ -115,7 +115,7 @@ class vault (
   $download_dir                        = '/tmp',
   $manage_download_dir                 = false,
   $download_filename                   = 'vault.zip',
-  $version                             = '1.4.2',
+  $version                             = '1.12.0',
   $os                                  = downcase($facts['kernel']),
   $arch                                = $vault::params::arch,
   Optional[Boolean] $enable_ui         = undef,
