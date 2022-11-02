@@ -97,7 +97,7 @@ class vault (
   Optional[Boolean] $manage_service_file = $vault::params::manage_service_file,
   Hash $storage                        = { 'file' => { 'path' => '/var/lib/vault' } },
   $manage_storage_dir                  = false,
-  Variant[Hash, Array[Hash]] $listener = { 'tcp' => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, },
+  Variant[Hash, Array[Hash]] $listener = { 'tcp' => { 'address' => '127.0.0.1:8200', 'tls_disable' => 1 }, },
   Optional[Hash] $ha_storage           = undef,
   Optional[Hash] $seal                 = undef,
   Optional[Boolean] $disable_cache     = undef,
