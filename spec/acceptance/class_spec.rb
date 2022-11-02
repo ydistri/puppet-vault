@@ -21,12 +21,6 @@ describe 'vault class' do
               path => '/tmp',
             }
           },
-          listener => [{
-            tcp => {
-              address => '127.0.0.1:8200',
-              tls_disable => 1,
-            }
-          }],
           bin_dir => '/usr/local/bin',
           install_method => 'archive',
           require => Class['file_capability'],
@@ -107,12 +101,6 @@ describe 'vault class' do
               path => '/tmp',
             }
           },
-          listener => [{
-            tcp => {
-              address => '127.0.0.1:8200',
-              tls_disable => 1,
-            }
-          }],
           install_method => 'repo',
           require => Class['file_capability'],
         }
