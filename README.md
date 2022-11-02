@@ -8,7 +8,7 @@
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/vault.svg)](https://forge.puppetlabs.com/puppet/vault)
 [![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-catalog-diff)
 [![Apache-2 License](https://img.shields.io/github/license/voxpupuli/puppet-vault.svg)](LICENSE)
-[![Donated by jsok](https://img.shields.io/badge/donated%20by-camptocamp-fb7047.svg)](#transfer-notice)
+[![Donated by jsok](https://img.shields.io/badge/donated%20by-jsok-fb7047.svg)](#transfer-notice)
 
 
 Puppet module to install and run [Hashicorp Vault](https://vaultproject.io).
