@@ -1,6 +1,6 @@
 {
   "name": "puppet-vault",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "author": "Vox Pupuli",
   "summary": "Puppet module to manage Vault (https://vaultproject.io)",
   "license": "Apache-2.0",

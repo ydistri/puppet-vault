@@ -232,7 +232,7 @@ Data type: `Any`
 
 The version of Vault to install
 
-Default value: `'1.4.2'`
+Default value: `'1.12.0'`
 
 ##### <a name="-vault--extra_config"></a>`extra_config`
 
@@ -376,7 +376,7 @@ Data type: `Variant[Hash, Array[Hash]]`
 
 
 
-Default value: `{ 'tcp' => { 'addresse' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
+Default value: `{ 'tcp' => { 'address' => '127.0.0.1:8200', 'tls_disable' => 1 }, }`
 
 ##### <a name="-vault--manage_storage_dir"></a>`manage_storage_dir`
 
